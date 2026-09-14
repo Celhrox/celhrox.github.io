@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Celhrox Portal</title>
-    <!-- Tailwind CSS (Görsel Tasarım İçin) -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
@@ -21,29 +21,31 @@
             transition: transform 0.3s ease, filter 0.3s ease;
         }
         .logo-hover:hover {
-            transform: scale(1.15) rotate(2deg);
-            filter: drop-shadow(0 0 15px var(--primary-color));
+            transform: scale(1.2) rotate(2deg);
+            filter: drop-shadow(0 0 20px var(--primary-color));
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
 
+    <!-- SES EFEKTİ (ENDERMAN TELEPORT) -->
+    <audio id="teleportSound" src="https://files.catbox.moe/tw1c86.mp3" preload="auto"></audio>
+
     <!-- HEADER / ÜST MENÜ -->
     <header class="border-b border-gray-800 p-6 flex justify-between items-center max-w-7xl mx-auto w-full">
-        <!-- SOL TARAFA HİZALANMIŞ BUTONLAR VE YAZILAR -->
+        <!-- SOL TARAFA HİZALANMIŞ MENÜ -->
         <nav class="flex items-center gap-6">
             <a href="#hero" class="text-lg font-medium hover:text-[var(--primary-color)] transition-colors">Ana Sayfa</a>
             <a href="#features" class="text-lg font-medium hover:text-[var(--primary-color)] transition-colors">Özellikler</a>
-            <a href="#downloads" class="text-lg font-medium hover:text-[var(--primary-color)] transition-colors">İndirmeler</a>
             <a id="discordBtn" href="https://discord.gg/7KNwXBBb6xy" target="_blank" class="bg-[#2294AA] hover:bg-opacity-80 px-4 py-2 rounded-lg font-semibold transition-all flex items-center gap-2">
                 <span>Discord</span>
-                <span id="discordStats" class="text-xs bg-black/30 px-2 py-0.5 rounded-full">Yükleniyor...</span>
+                <span id="discordStats" class="text-xs bg-black/40 px-2 py-0.5 rounded-full">Yükleniyor...</span>
             </a>
         </nav>
 
-        <!-- SAĞ TARAFTA BÜYÜK VE VURGULANAN LOGO -->
+        <!-- SAĞ TARAFTA BÜYÜK CELHROX LOGOSU -->
         <div class="flex items-center">
-            <img src="https://via.placeholder.com/80/2294AA/FFFFFF?text=CELHROX" alt="Celhrox Logo" class="w-20 h-20 rounded-full cursor-pointer logo-hover border-2 border-[var(--primary-color)]">
+            <img id="mainLogo" src="https://files.catbox.moe/kq195p.png" alt="Celhrox Logo" class="w-24 h-24 object-contain cursor-pointer logo-hover">
         </div>
     </header>
 
@@ -57,21 +59,14 @@
 
         <!-- ÖZELLİKLER BÖLÜMÜ -->
         <section id="features" class="w-full my-12">
-            <h2 class="text-3xl font-bold mb-8 text-left border-b border-gray-800 pb-2">Özellikler</h2>
-            <div id="featuresList" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-gray-900/50 p-6 rounded-xl border border-gray-800 text-left">
-                    <h3 class="text-xl font-semibold mb-2 text-[var(--primary-color)]">Yüksek Performans</h3>
-                    <p class="text-gray-400 text-sm">Kesintisiz ve düşük gecikmeli sunucu altyapısı.</p>
-                </div>
-                <div class="bg-gray-900/50 p-6 rounded-xl border border-gray-800 text-left">
-                    <h3 class="text-xl font-semibold mb-2 text-[var(--primary-color)]">Aktif Topluluk</h3>
-                    <p class="text-gray-400 text-sm">7/24 aktif Discord sunucusu ve yetkili ekibi.</p>
-                </div>
+            <h2 class="text-3xl font-bold mb-8 text-left border-b border-gray-800 pb-2">Sunucu Özellikleri</h2>
+            <div id="featuresContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Dinamik özellikler JavaScript ile doldurulur -->
             </div>
         </section>
     </main>
 
-    <!-- FOOTER / TELİF HAKLARI (ÜÇ KERE TIKLAMA GİZLİ MANTIĞI) -->
+    <!-- FOOTER / TELİF HAKKI (ÜÇ KERE TIKLAYINCA GİZLİ ADMİN PANELİ) -->
     <footer class="border-t border-gray-800 p-6 text-center text-gray-500 text-sm">
         <p id="copyrightText" class="cursor-pointer select-none hover:text-gray-400 transition-colors">
             © 2026 Celhrox Portal. Tüm Hakları Saklıdır.
@@ -79,14 +74,14 @@
     </footer>
 
     <!-- GİZLİ ADMİN PANELİ MODAL -->
-    <div id="adminModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-gray-900 border border-gray-800 w-full max-w-lg rounded-2xl p-6 text-left relative">
+    <div id="adminModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-gray-900 border border-gray-800 w-full max-w-lg rounded-2xl p-6 text-left relative max-h-[90vh] overflow-y-auto">
             <button id="closeAdmin" class="absolute top-4 right-4 text-gray-400 hover:text-white">✕</button>
             
-            <!-- ADMİN GİRİŞ FORMU -->
+            <!-- GİRİŞ FORMU -->
             <div id="adminAuth">
                 <h2 class="text-2xl font-bold mb-4">Admin Girişi</h2>
-                <input type="password" id="adminPassword" placeholder="Şifrenizi girin..." class="w-full bg-black border border-gray-800 rounded-lg p-3 text-white mb-4 focus:outline-none focus:border-[var(--primary-color)]">
+                <input type="password" id="adminPassword" placeholder="Şifrenizi girin..." class="w-full bg-black border border-gray-800 rounded-lg p-3 text-white mb-4 focus:outline-none">
                 <button id="loginBtn" class="w-full bg-[#2294AA] py-3 rounded-lg font-bold">Giriş Yap</button>
             </div>
 
@@ -94,32 +89,36 @@
             <div id="adminPanel" class="hidden space-y-6">
                 <h2 class="text-2xl font-bold border-b border-gray-800 pb-2">Admin Paneli</h2>
                 
-                <!-- SİTE BAŞLIĞI DÜZENLEME -->
                 <div>
                     <label class="block text-sm text-gray-400 mb-1">Site Başlığı</label>
                     <input type="text" id="editTitle" class="w-full bg-black border border-gray-800 rounded p-2 text-white text-sm">
                 </div>
 
-                <!-- ŞİFRE DEĞİŞTİRME -->
                 <div>
-                    <label class="block text-sm text-gray-400 mb-1">Yeni Admin Şifresi</label>
-                    <input type="password" id="newPass" placeholder="Yeni şifre" class="w-full bg-black border border-gray-800 rounded p-2 text-white text-sm">
+                    <label class="block text-sm text-gray-400 mb-1">Yeni Şifre</label>
+                    <input type="password" id="newPass" placeholder="Yeni şifre belirleyin" class="w-full bg-black border border-gray-800 rounded p-2 text-white text-sm">
                 </div>
 
-                <!-- RENK DEĞİŞTİRME -->
                 <div>
-                    <label class="block text-sm text-gray-400 mb-1">Vurgu Rengi</label>
+                    <label class="block text-sm text-gray-400 mb-1">Ana Renk</label>
                     <input type="color" id="editColor" value="#2294AA" class="w-full h-10 bg-black border border-gray-800 rounded cursor-pointer">
                 </div>
 
-                <button id="saveAdminSettings" class="w-full bg-green-600 hover:bg-green-700 py-2 rounded font-bold transition-colors">Kaydet ve Güncelle</button>
+                <button id="saveAdminSettings" class="w-full bg-green-600 hover:bg-green-700 py-2 rounded font-bold transition-colors">Ayarları Kaydet</button>
             </div>
         </div>
     </div>
 
-    <!-- JAVASCRIPT MANTIKLARI -->
     <script>
-        // 1. DİSCORD PROXY İLE ÇEVRİM İÇİ SAYISI ÇEKME (Türkiye Engeli Aşımı)
+        // Ses Efekti Çalıştırma (Logo Tıklaması)
+        const logo = document.getElementById('mainLogo');
+        const sound = document.getElementById('teleportSound');
+        logo.addEventListener('click', () => {
+            sound.currentTime = 0;
+            sound.play().catch(() => {});
+        });
+
+        // Discord Proxy Bağlantısı
         const DISCORD_CODE = "7KNwXBBb6xy";
         const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(`https://discord.com/api/v10/invites/${DISCORD_CODE}?with_counts=true`)}`;
 
@@ -136,7 +135,7 @@
                 document.getElementById('discordStats').innerText = `Katıl`;
             });
 
-        // 2. TELİF HAKKINA 3 KERE TIKLAYINCA GİZLİ ADMİN PANELİNİ AÇMA
+        // Üç Kere Tıklama (Triple Click) ile Gizli Admin
         let clickCount = 0;
         let clickTimer;
         const copyrightText = document.getElementById('copyrightText');
@@ -157,12 +156,11 @@
             adminModal.classList.add('hidden');
         });
 
-        // 3. ADMİN PANELİ ŞİFRE VE DÜZENLEME MANTIĞI (Tarayıcı Hafızasında Saklanır)
+        // Admin Ayarları Saklama
         let currentPass = localStorage.getItem('celhrox_admin_pass') || 'admin123';
 
         document.getElementById('loginBtn').addEventListener('click', () => {
-            const inputPass = document.getElementById('adminPassword').value;
-            if(inputPass === currentPass) {
+            if(document.getElementById('adminPassword').value === currentPass) {
                 document.getElementById('adminAuth').classList.add('hidden');
                 document.getElementById('adminPanel').classList.remove('hidden');
                 document.getElementById('editTitle').value = document.getElementById('siteTitle').innerText;
@@ -176,9 +174,7 @@
             const newPass = document.getElementById('newPass').value;
             const newColor = document.getElementById('editColor').value;
 
-            if(newTitle) {
-                document.getElementById('siteTitle').innerText = newTitle;
-            }
+            if(newTitle) document.getElementById('siteTitle').innerText = newTitle;
             if(newPass) {
                 currentPass = newPass;
                 localStorage.setItem('celhrox_admin_pass', newPass);
@@ -187,7 +183,7 @@
                 document.styleSheets[0].insertRule(`:root { --primary-color: ${newColor} !important; }`, 0);
             }
 
-            alert('Ayarlar kaydedildi!');
+            alert('Ayarlar Güncellendi!');
             adminModal.classList.add('hidden');
         });
     </script>
