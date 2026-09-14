@@ -3,12 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Celhrox / Ultimate Resource Pack</title>
+    <!-- Varsayılan Başlık (JavaScript ile dinamik değişecek) -->
+    <title>Celhrox | Ultimate Pack</title>
+    
+    <!-- Favicon (Sitenin Logosu) -->
+    <link rel="icon" type="image/png" href="https://files.catbox.moe/kq195p.png">
+    
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -19,13 +25,10 @@
                     },
                     colors: {
                         brand: {
-                            50: '#edfcfd',
-                            100: '#d1f6fa',
                             400: '#38cbdc',
                             500: '#2294AA',
                             600: '#1b798c',
-                            900: '#090D14',
-                            darker: '#06090e',
+                            bg: '#090D14',
                             card: '#101622',
                             border: '#1e293b'
                         }
@@ -34,6 +37,7 @@
             }
         }
     </script>
+    
     <style>
         body {
             background-color: #090D14;
@@ -42,11 +46,11 @@
             overflow-x: hidden;
         }
         .glow-btn {
-            box-shadow: 0 0 20px rgba(34, 148, 170, 0.35);
+            box-shadow: 0 0 20px rgba(34, 148, 170, 0.4);
             transition: all 0.3s ease;
         }
         .glow-btn:hover {
-            box-shadow: 0 0 30px rgba(34, 148, 170, 0.6);
+            box-shadow: 0 0 35px rgba(34, 148, 170, 0.7);
             transform: translateY(-2px);
         }
         .glow-card {
@@ -62,129 +66,123 @@
             color: #2294AA;
             border-bottom: 2px solid #2294AA;
         }
-        .logo-hover {
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        /* Sağdaki devasa logo efekti */
+        .hero-logo {
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.5s ease;
         }
-        .logo-hover:hover {
-            transform: scale(1.18) rotate(3deg);
-            filter: drop-shadow(0 0 12px rgba(34, 148, 170, 0.8));
+        .hero-logo:hover {
+            transform: scale(1.15) rotate(6deg) !important;
+            filter: drop-shadow(0 0 40px rgba(34, 148, 170, 0.8));
         }
         /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #090D14;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1e293b;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #2294AA;
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #090D14; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #2294AA; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-brand-500 selection:text-white">
 
-    <!-- ARKA PLAN SESİ (ENDERMAN TELEPORT EFEKTİ) -->
+    <!-- ARKA PLAN SESİ -->
     <audio id="bgAudio" src="https://files.catbox.moe/tw1c86.mp3" preload="auto"></audio>
 
     <!-- HEADER / NAVİGASYON -->
-    <header class="sticky top-0 z-40 bg-[#090D14]/80 backdrop-blur-md border-b border-brand-border/60 px-6 py-4">
-        <div class="max-w-6xl mx-auto flex items-center justify-between">
+    <header class="sticky top-0 z-40 bg-brand-bg/80 backdrop-blur-md border-b border-brand-border/60 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
             
-            <!-- LOGO & BAŞLIK (SOL TARAF) -->
-            <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('home')">
-                <img id="headerLogo" src="https://files.catbox.moe/kq195p.png" alt="Celhrox Logo" class="w-9 h-9 rounded-lg logo-hover border border-brand-500/30">
-                <span class="font-extrabold text-xl tracking-tight text-white flex items-center gap-1">
-                    Celhrox <span class="text-brand-500 font-normal">/</span>
-                </span>
-            </div>
-
-            <!-- SEKMELER (ORTA) -->
-            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
-                <button onclick="switchTab('features')" id="nav-features" class="tab-btn hover:text-white transition py-1">Özellikler</button>
-                <button onclick="switchTab('gallery')" id="nav-gallery" class="tab-btn hover:text-white transition py-1">Galeri</button>
-                <button onclick="switchTab('updates')" id="nav-updates" class="tab-btn hover:text-white transition py-1">Güncellemeler</button>
-            </nav>
-
-            <!-- SAĞ TARAF (GİZLİ ADMİN BUTONU) -->
-            <div class="flex items-center gap-3">
-                <button onclick="openAdminModal()" class="text-xs bg-brand-card hover:bg-slate-800 text-gray-300 px-4 py-2 rounded-lg border border-gray-700/60 font-semibold transition">
-                    Admin Paneli
+            <!-- LOGO, BAŞLIK & GİZLİ ADMİN BUTONU (SOL TARAF) -->
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-3 cursor-pointer" onclick="navigate('#/')">
+                    <img src="https://files.catbox.moe/kq195p.png" alt="Celhrox Logo" class="w-9 h-9 rounded-lg border border-brand-500/30">
+                    <span class="font-extrabold text-xl tracking-tight text-white flex items-center gap-1">
+                        Celhrox <span class="text-brand-500 font-normal">/</span>
+                    </span>
+                </div>
+                <!-- Gizli Admin Butonu (Başlangıçta gizli) -->
+                <button id="secretAdminBtn" onclick="openAdminModal()" class="hidden ml-2 text-[10px] uppercase tracking-wider bg-brand-500 hover:bg-brand-600 text-white px-3 py-1.5 rounded font-bold shadow-[0_0_10px_rgba(34,148,170,0.5)] transition">
+                    <i class="fa-solid fa-lock mr-1"></i> Admin
                 </button>
             </div>
+
+            <!-- SEKMELER (SAĞ TARAF) -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
+                <button onclick="navigate('#/ozellikler')" id="nav-features" class="tab-btn hover:text-white transition py-1">Özellikler</button>
+                <button onclick="navigate('#/galeri')" id="nav-gallery" class="tab-btn hover:text-white transition py-1">Galeri</button>
+                <button onclick="navigate('#/guncellemeler')" id="nav-updates" class="tab-btn hover:text-white transition py-1">Güncellemeler</button>
+            </nav>
         </div>
     </header>
 
     <!-- ANA İÇERİK ALANI -->
-    <main class="max-w-6xl mx-auto w-full px-4 py-10 flex-1 flex flex-col items-center">
+    <main class="max-w-7xl mx-auto w-full px-6 py-12 flex-1 flex flex-col">
 
-        <!-- SEYRİ 1: ANA SAYFA & HERO BÖLÜMÜ -->
-        <section id="tab-home" class="w-full flex flex-col items-center text-center space-y-10 my-auto">
+        <!-- ROUTE: ANA SAYFA (#/) -->
+        <section id="route-home" class="w-full hidden flex-col">
             
-            <!-- SÜRÜM ROZETİ -->
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-500/10 border border-brand-500/30 text-brand-400 text-xs font-semibold tracking-wide">
-                <span id="versionTag">Sürüm v3.2.0</span>
-            </div>
+            <!-- HERO BÖLÜMÜ (SOLA HİZALI METİNLER, SAĞDA EĞİK BÜYÜK LOGO) -->
+            <div class="flex flex-col md:flex-row items-center justify-between gap-12 pt-8 pb-20">
+                
+                <!-- Sol Kısım: Yazılar ve Butonlar -->
+                <div class="flex-1 text-left space-y-6">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-500/10 border border-brand-500/30 text-brand-400 text-xs font-bold tracking-wide">
+                        <span id="displayVersion">Sürüm v3.2.0</span>
+                    </div>
 
-            <!-- BÜYÜK BAŞLIK VE AÇIKLAMA -->
-            <div class="space-y-4 max-w-3xl">
-                <h1 class="text-4xl md:text-6xl font-black tracking-tight text-white">
-                    Celhrox <span class="text-brand-500">Ultimate Resource Pack</span>
-                </h1>
-                <p id="heroDesc" class="text-gray-400 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-                    Maksimum FPS Boost, Sade Bare Bones Stili, Özel Kılıçlar ve Font Desteği
-                </p>
-            </div>
+                    <h1 class="text-5xl md:text-7xl font-black tracking-tight text-white leading-tight">
+                        Celhrox <span class="text-brand-500">Ultimate <br/>Resource Pack</span>
+                    </h1>
+                    
+                    <p class="text-gray-400 text-lg max-w-xl leading-relaxed">
+                        Maksimum FPS Boost, Sade Bare Bones Stili, Özel Kılıçlar ve Font Desteği.
+                    </p>
 
-            <!-- CANLI DISCORD / SÜREÇ Simgesi -->
-            <div class="inline-flex items-center gap-2.5 bg-brand-card px-5 py-2.5 rounded-full border border-gray-800 text-xs md:text-sm">
-                <span class="relative flex h-2.5 w-2.5">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-                </span>
-                <span id="discordLiveStatus" class="font-medium text-gray-300">CANLI — Yükleniyor...</span>
-            </div>
+                    <div class="inline-flex items-center gap-2.5 bg-brand-card px-5 py-2.5 rounded-full border border-gray-800 text-sm">
+                        <span class="relative flex h-2.5 w-2.5">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                        </span>
+                        <span id="discordLiveStatus" class="font-medium text-gray-300">CANLI — Discord Aktif</span>
+                    </div>
 
-            <!-- AKSİYON BUTONLARI -->
-            <div class="flex flex-col sm:flex-row items-center gap-4 w-full justify-center pt-2">
-                <a id="downloadBtn" href="#" onclick="playEndermanSound(); alert('Paket indirmesi başlatılıyor!'); return false;" class="w-full sm:w-auto px-8 py-3.5 bg-brand-500 text-white font-bold rounded-xl glow-btn transition text-sm">
-                    Paketi & Fontları İndir
-                </a>
-                <a id="discordLinkBtn" href="https://discord.gg/7KNwXBBb6xy" target="_blank" onclick="playEndermanSound()" class="w-full sm:w-auto px-8 py-3.5 bg-brand-card hover:bg-slate-800 border border-gray-700/80 text-white font-semibold rounded-xl transition text-sm">
-                    Discord'a Katıl
-                </a>
+                    <div class="flex flex-wrap items-center gap-4 pt-4">
+                        <button onclick="handleDownload()" class="px-8 py-3.5 bg-brand-500 text-white font-bold rounded-xl glow-btn transition text-sm">
+                            Paketi & Fontları İndir
+                        </button>
+                        <a id="displayDiscord" href="https://discord.gg/7KNwXBBb6xy" target="_blank" onclick="playAudio()" class="px-8 py-3.5 bg-brand-card hover:bg-slate-800 border border-gray-700/80 text-white font-semibold rounded-xl transition text-sm">
+                            Discord'a Katıl
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Sağ Kısım: Devasa Eğik Logo -->
+                <div class="flex-1 flex justify-center md:justify-end">
+                    <img src="https://files.catbox.moe/kq195p.png" alt="Celhrox Huge Logo" class="hero-logo w-72 h-72 md:w-[400px] md:h-[400px] object-contain rounded-[2rem] transform rotate-3">
+                </div>
             </div>
 
             <!-- ÖZELLİKLER HIZLI ÖZET (4 KART) -->
-            <div class="w-full pt-16">
+            <div class="w-full pt-12 border-t border-gray-800/50">
                 <div class="text-center mb-10">
                     <h2 class="text-3xl font-bold text-white mb-2">Özellikler</h2>
                     <p class="text-gray-400 text-sm">Paketin oyununa kattığı dört temel iyileştirme.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 text-left">
-                    <!-- Kart 1 -->
                     <div class="bg-brand-card p-6 rounded-2xl glow-card">
                         <div class="text-amber-400 text-2xl mb-4"><i class="fa-solid fa-bolt"></i></div>
                         <h3 class="font-bold text-lg text-white mb-2">Yüksek FPS Boost</h3>
                         <p class="text-gray-400 text-xs leading-relaxed">Optimize edilmiş hafif dokular ve yüksek performans.</p>
                     </div>
-                    <!-- Kart 2 -->
                     <div class="bg-brand-card p-6 rounded-2xl glow-card">
                         <div class="text-emerald-400 text-2xl mb-4"><i class="fa-solid fa-cube"></i></div>
                         <h3 class="font-bold text-lg text-white mb-2">Bare Bones Stili</h3>
                         <p class="text-gray-400 text-xs leading-relaxed">Sade, net ve göz yormayan blok mimarisi.</p>
                     </div>
-                    <!-- Kart 3 -->
                     <div class="bg-brand-card p-6 rounded-2xl glow-card">
                         <div class="text-indigo-400 text-2xl mb-4"><i class="fa-solid fa-shield-halved"></i></div>
                         <h3 class="font-bold text-lg text-white mb-2">Pvp İçin Mükemmel</h3>
                         <p class="text-gray-400 text-xs leading-relaxed">Özel totem patlama efekti ve göz yormayan blok dokuları.</p>
                     </div>
-                    <!-- Kart 4 -->
                     <div class="bg-brand-card p-6 rounded-2xl glow-card">
                         <div class="text-brand-400 text-2xl mb-4"><i class="fa-solid fa-font"></i></div>
                         <h3 class="font-bold text-lg text-white mb-2">Özelleştirilmiş Unicode Font</h3>
@@ -192,113 +190,151 @@
                     </div>
                 </div>
             </div>
-
-            <!-- HIZLI GEZİNTİ BUTONLARI -->
-            <div class="pt-10 w-full">
-                <p class="text-gray-500 text-xs font-semibold mb-4 uppercase tracking-widest">Tüm bölümleri keşfet</p>
-                <div class="flex flex-wrap justify-center gap-3">
-                    <button onclick="switchTab('features')" class="px-5 py-2.5 bg-brand-card hover:bg-slate-800 border border-gray-800 rounded-xl text-xs font-semibold text-gray-300">Özellikler</button>
-                    <button onclick="switchTab('gallery')" class="px-5 py-2.5 bg-brand-card hover:bg-slate-800 border border-gray-800 rounded-xl text-xs font-semibold text-gray-300">Galeri</button>
-                    <button onclick="switchTab('updates')" class="px-5 py-2.5 bg-brand-card hover:bg-slate-800 border border-gray-800 rounded-xl text-xs font-semibold text-gray-300">Güncellemeler</button>
-                </div>
-            </div>
         </section>
 
-        <!-- SEYRİ 2: ÖZELLİKLER DETAY SAYFASI -->
-        <section id="tab-features" class="w-full hidden space-y-8">
+        <!-- ROUTE: ÖZELLİKLER (#/ozellikler) -->
+        <section id="route-features" class="w-full hidden space-y-8">
             <div class="text-center max-w-xl mx-auto mb-10">
-                <h2 class="text-3xl font-extrabold text-white mb-2">Özellikler</h2>
-                <p class="text-gray-400 text-sm">Paketin oyununa kattığı detaylı iyileştirmeler ve detaylar.</p>
+                <h2 class="text-4xl font-black text-white mb-2">Özellikler</h2>
+                <p class="text-gray-400 text-sm">Paketin oyununa kattığı detaylı iyileştirmeler.</p>
             </div>
-            
-            <div id="featuresList" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- JavaScript ile dinamik beslenebilir -->
+            <!-- Özellikler detay içeriği -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 opacity-50">
+                <!-- İçerik buraya eklenebilir -->
+                <div class="bg-brand-card p-8 rounded-2xl border border-gray-800 text-center"><i class="fa-solid fa-screwdriver-wrench text-3xl mb-3 text-brand-500"></i><p>Detaylı özellikler yapım aşamasında.</p></div>
+                <div class="bg-brand-card p-8 rounded-2xl border border-gray-800 text-center"><i class="fa-solid fa-code text-3xl mb-3 text-brand-500"></i><p>Çok yakında eklenecek.</p></div>
             </div>
         </section>
 
-        <!-- SEYRİ 3: GALERİ -->
-        <section id="tab-gallery" class="w-full hidden space-y-8">
+        <!-- ROUTE: GALERİ (#/galeri) -->
+        <section id="route-gallery" class="w-full hidden space-y-8">
             <div class="text-center max-w-xl mx-auto mb-10">
-                <h2 class="text-3xl font-extrabold text-white mb-2">Galeri</h2>
-                <p class="text-gray-400 text-sm">Oyun içi ekran görüntüleri ve konsept tasarımlar.</p>
+                <h2 class="text-4xl font-black text-white mb-2">Galeri</h2>
+                <p class="text-gray-400 text-sm">Oyun içi ekran görüntüleri.</p>
             </div>
-
-            <div class="flex justify-center">
-                <div class="bg-brand-card p-4 rounded-3xl border border-gray-800 max-w-lg overflow-hidden shadow-2xl">
-                    <img src="https://files.catbox.moe/kq195p.png" alt="Celhrox Preview" class="w-full h-auto rounded-2xl object-cover hover:scale-105 transition duration-500">
-                </div>
+            <div id="galleryContainer" class="flex flex-wrap justify-center gap-6">
+                <!-- Dinamik resimler buraya gelir -->
             </div>
         </section>
 
-        <!-- SEYRİ 4: GÜNCELLEME NOTLARI -->
-        <section id="tab-updates" class="w-full hidden max-w-3xl space-y-8">
+        <!-- ROUTE: GÜNCELLEMELER (#/guncellemeler) -->
+        <section id="route-updates" class="w-full hidden max-w-4xl mx-auto space-y-8">
             <div class="text-center mb-10">
-                <h2 class="text-3xl font-extrabold text-white mb-2">Güncelleme Notları</h2>
-                <p class="text-gray-400 text-sm">Kaynak paketinin son sürüm değişiklikleri ve yamalar.</p>
+                <h2 class="text-4xl font-black text-white mb-2">Güncelleme Notları</h2>
+                <p class="text-gray-400 text-sm">Kaynak paketinin son sürüm değişiklikleri.</p>
             </div>
-
-            <div id="patchNotesContainer" class="space-y-4">
-                <!-- JavaScript Yamaları -->
+            <div id="updatesContainer" class="space-y-4">
+                <!-- Dinamik notlar buraya gelir -->
             </div>
         </section>
 
     </main>
 
-    <!-- FOOTER TELİF HAKLARI -->
-    <footer class="border-t border-brand-border/40 py-8 text-center text-gray-500 text-xs relative">
-        <p id="copyrightText" title="3 kez tıklayarak gizli admin modunu açabilirsiniz" class="cursor-pointer select-none hover:text-gray-400 transition">
+    <!-- FOOTER -->
+    <footer class="border-t border-gray-800/50 py-8 text-center text-gray-500 text-xs relative">
+        <!-- Gizli Tetikleyici: Buraya 3 kez tıkla -->
+        <p id="copyrightText" class="cursor-pointer select-none hover:text-gray-400 transition inline-block px-4">
             © 2026 Celhrox. Tüm hakları saklıdır.
         </p>
     </footer>
 
-    <!-- SABİT SES BUTONU (SOL ALT) -->
-    <button id="soundToggleBtn" onclick="toggleAudio()" class="fixed bottom-6 left-6 z-50 bg-brand-card border border-brand-500/40 text-brand-400 p-3.5 rounded-full shadow-xl hover:scale-110 transition">
-        <i id="soundIcon" class="fa-solid fa-volume-xmark text-lg"></i>
+    <!-- SABİT SES BUTONU -->
+    <button id="soundToggleBtn" onclick="toggleAudio()" class="fixed bottom-6 right-6 z-50 bg-brand-card border border-brand-500/40 text-brand-400 p-3.5 rounded-full shadow-xl hover:scale-110 transition">
+        <i id="soundIcon" class="fa-solid fa-volume-high text-lg"></i>
     </button>
 
-    <!-- ADMİN PANLEİ MODAL (TELİF HAKKINA 3 TIKLAMA İLE VEYA ADMİN BUTONUYLA AÇILIR) -->
-    <div id="adminModal" class="fixed inset-0 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
-        <div class="bg-brand-card border border-gray-800 w-full max-w-md rounded-2xl p-6 relative shadow-2xl space-y-6">
+    <!-- DETAYLI ADMİN PANELİ MODALI -->
+    <div id="adminModal" class="fixed inset-0 bg-brand-bg/95 backdrop-blur-sm hidden items-center justify-center p-4 z-50 overflow-y-auto">
+        
+        <!-- ADMİN GİRİŞ -->
+        <div id="adminAuthView" class="bg-brand-card border border-brand-500/30 w-full max-w-sm rounded-2xl p-8 relative shadow-2xl">
             <button onclick="closeAdminModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
-
-            <!-- ADMİN GİRİŞ -->
-            <div id="adminAuthView">
-                <h3 class="text-xl font-bold text-white mb-2">Admin Girişi</h3>
-                <p class="text-xs text-gray-400 mb-4">Giriş yapmak için şifrenizi giriniz.</p>
-                <input type="password" id="adminPasswordInput" placeholder="Şifre..." class="w-full bg-slate-900 border border-gray-800 rounded-xl p-3 text-sm text-white mb-4 focus:outline-none focus:border-brand-500">
-                <button onclick="verifyAdminPassword()" class="w-full bg-brand-500 hover:bg-brand-600 text-white py-3 rounded-xl font-bold text-sm transition">Giriş Yap</button>
+            <div class="flex items-center gap-3 mb-6">
+                <img src="https://files.catbox.moe/kq195p.png" class="w-8 h-8 rounded">
+                <h3 class="text-xl font-bold text-white">Admin Paneli</h3>
             </div>
+            <input type="password" id="adminPasswordInput" placeholder="Şifre..." class="w-full bg-[#090D14] border border-gray-800 rounded-lg p-3 text-sm text-white mb-4 focus:outline-none focus:border-brand-500">
+            <button onclick="verifyAdminPassword()" class="w-full bg-brand-500 hover:bg-brand-400 text-white py-3 rounded-lg font-bold transition shadow-[0_0_15px_rgba(34,148,170,0.3)]">Giriş Yap</button>
+        </div>
 
-            <!-- ADMİN YÖNETİM FORMU -->
-            <div id="adminPanelView" class="hidden space-y-4 max-h-[75vh] overflow-y-auto pr-2">
-                <h3 class="text-xl font-bold text-white border-b border-gray-800 pb-3">Admin Ayarları</h3>
+        <!-- ADMİN DASHBOARD (Ekran görüntülerindeki detaylı tasarım) -->
+        <div id="adminPanelView" class="hidden bg-[#090D14] w-full max-w-4xl rounded-2xl relative shadow-2xl min-h-[80vh] flex-col">
+            <!-- Header -->
+            <div class="flex items-center justify-between p-6 border-b border-gray-800">
+                <div class="flex items-center gap-3">
+                    <img src="https://files.catbox.moe/kq195p.png" class="w-8 h-8 rounded">
+                    <h3 class="text-lg font-bold text-white">Admin Paneli</h3>
+                </div>
+                <button onclick="closeAdminModal()" class="px-4 py-2 bg-brand-card hover:bg-gray-800 border border-gray-700 rounded-lg text-sm font-medium text-white transition">Siteye Dön</button>
+            </div>
+            
+            <!-- Body -->
+            <div class="p-6 space-y-6 overflow-y-auto">
                 
-                <div>
-                    <label class="block text-xs font-semibold text-gray-400 mb-1">Paket Sürüm Etiketi</label>
-                    <input type="text" id="adminVersionInput" class="w-full bg-slate-900 border border-gray-800 rounded-lg p-2.5 text-xs text-white">
+                <!-- 1. İndirme Sayacı -->
+                <div class="bg-[#101622] border border-brand-500/30 rounded-xl p-6 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-brand-500/5 pointer-events-none"></div>
+                    <h4 class="text-white font-bold mb-1 relative">İndirme Sayaç İstatistiği</h4>
+                    <p class="text-gray-400 text-xs mb-6 relative">"Paketi & Fontları İndir" butonuna yapılan tıklama sayısı.</p>
+                    
+                    <div class="flex items-end justify-between relative">
+                        <div class="text-5xl font-light text-brand-400" id="adminDownloadCount">0</div>
+                        <button onclick="resetDownloads()" class="px-4 py-1.5 bg-transparent border border-gray-600 hover:border-gray-400 rounded-full text-xs text-gray-300 transition">Sıfırla</button>
+                    </div>
+                    <div class="w-full bg-gray-800 h-1.5 rounded-full mt-4 relative overflow-hidden">
+                        <div class="bg-brand-500 h-1.5 rounded-full" style="width: 5%"></div>
+                    </div>
                 </div>
 
-                <div>
-                    <label class="block text-xs font-semibold text-gray-400 mb-1">Hero Açıklama Metni</label>
-                    <textarea id="adminDescInput" rows="2" class="w-full bg-slate-900 border border-gray-800 rounded-lg p-2.5 text-xs text-white"></textarea>
+                <!-- 2. Galeri Yöneticisi -->
+                <div class="bg-[#101622] border border-gray-800 rounded-xl p-6">
+                    <h4 class="text-white font-bold mb-4">Galeri Yöneticisi</h4>
+                    <div class="flex gap-3 mb-6">
+                        <input type="text" id="newImgUrl" placeholder="Yeni resim URL'si" class="flex-1 bg-[#090D14] border border-gray-800 rounded-lg p-3 text-sm text-white focus:outline-none focus:border-brand-500">
+                        <button onclick="addGalleryImage()" class="px-6 py-3 bg-brand-500 hover:bg-brand-400 text-[#090D14] font-bold rounded-lg transition shadow-[0_0_10px_rgba(34,148,170,0.3)]">Ekle</button>
+                    </div>
+                    <div id="adminGalleryList" class="space-y-3">
+                        <!-- Admin list of images -->
+                    </div>
                 </div>
 
-                <div>
-                    <label class="block text-xs font-semibold text-gray-400 mb-1">Yeni Admin Şifresi</label>
-                    <input type="password" id="adminNewPassInput" placeholder="Şifreyi değiştirmek istemiyorsanız boş bırakın" class="w-full bg-slate-900 border border-gray-800 rounded-lg p-2.5 text-xs text-white">
+                <!-- 3. Güncelleme Notları -->
+                <div class="bg-[#101622] border border-gray-800 rounded-xl p-6">
+                    <h4 class="text-white font-bold mb-1">Güncelleme Notları Düzenleyici</h4>
+                    <p class="text-gray-400 text-xs mb-4">Her satır ana sayfada ayrı bir güncelleme notu olarak görünür.</p>
+                    <textarea id="adminUpdatesInput" rows="6" class="w-full bg-[#090D14] border border-gray-800 rounded-lg p-4 text-sm text-gray-300 focus:outline-none focus:border-brand-500 leading-relaxed"></textarea>
+                    <div class="mt-4">
+                        <button onclick="saveUpdates()" class="px-6 py-2.5 bg-brand-500 hover:bg-brand-400 text-[#090D14] font-bold rounded-lg transition shadow-[0_0_10px_rgba(34,148,170,0.3)]">Kaydet</button>
+                    </div>
                 </div>
 
-                <button onclick="saveAdminChanges()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-xl font-bold text-xs transition">Kaydet ve Uygula</button>
+                <!-- 4. Link & Sürüm Yöneticisi -->
+                <div class="bg-[#101622] border border-gray-800 rounded-xl p-6">
+                    <h4 class="text-white font-bold mb-4">Link Yöneticisi</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label class="block text-gray-400 text-xs mb-2">Discord davet linki</label>
+                            <input type="text" id="adminDiscordInput" class="w-full bg-[#090D14] border border-gray-800 rounded-lg p-3 text-sm text-white focus:outline-none focus:border-brand-500">
+                        </div>
+                        <div>
+                            <label class="block text-gray-400 text-xs mb-2">Paket sürüm numarası</label>
+                            <input type="text" id="adminVersionInput" class="w-full bg-[#090D14] border border-gray-800 rounded-lg p-3 text-sm text-white focus:outline-none focus:border-brand-500">
+                        </div>
+                    </div>
+                    <button onclick="saveLinks()" class="px-6 py-2.5 bg-brand-500 hover:bg-brand-400 text-[#090D14] font-bold rounded-lg transition shadow-[0_0_10px_rgba(34,148,170,0.3)]">Tek Tıkla Güncelle</button>
+                </div>
+
             </div>
         </div>
     </div>
 
     <!-- JAVASCRIPT MANTIKLARI -->
     <script>
-        // 1. SES VE EFEKT YÖNETİMİ
+        // --- 1. SES & EFEKT ---
+        // Varsayılan olarak ses açık (isMuted = false). Tarayıcı engeline karşı ilk tıklamada play tetiklenir.
         const bgAudio = document.getElementById('bgAudio');
         const soundIcon = document.getElementById('soundIcon');
-        let isMuted = true;
+        let isMuted = false; 
 
         function toggleAudio() {
             if (isMuted) {
@@ -309,126 +345,247 @@
             } else {
                 bgAudio.pause();
                 isMuted = true;
-                soundIcon.className = 'fa-solid fa-volume-xmark text-lg';
+                soundIcon.className = 'fa-solid fa-volume-xmark text-lg text-gray-500';
             }
         }
 
-        function playEndermanSound() {
+        function playAudio() {
             if (!isMuted) {
                 bgAudio.currentTime = 0;
                 bgAudio.play().catch(() => {});
             }
         }
 
-        // 2. SEKMELER ARASI GEÇİŞ
-        function switchTab(tabName) {
-            playEndermanSound();
-            const tabs = ['home', 'features', 'gallery', 'updates'];
-            tabs.forEach(tab => {
-                const el = document.getElementById(`tab-${tab}`);
-                const navBtn = document.getElementById(`nav-${tab}`);
-                if (tab === tabName) {
-                    el.classList.remove('hidden');
-                    if (navBtn) navBtn.classList.add('active');
-                } else {
-                    el.classList.add('hidden');
-                    if (navBtn) navBtn.classList.remove('active');
-                }
-            });
+        // Sayfa ilk yüklendiğinde bir yere tıklanırsa müziği başlat
+        document.body.addEventListener('click', function initAudio() {
+            if (!isMuted) bgAudio.play().catch(() => {});
+            document.body.removeEventListener('click', initAudio);
+        }, { once: true });
+
+
+        // --- 2. ROUTING (Hash tabanlı sayfa yönetimi) ---
+        const routes = {
+            '#/': { id: 'route-home', title: 'Celhrox | Ultimate Pack' },
+            '#/ozellikler': { id: 'route-features', title: 'Özellikler | Ultimate Pack' },
+            '#/galeri': { id: 'route-gallery', title: 'Galeri | Ultimate Pack' },
+            '#/guncellemeler': { id: 'route-updates', title: 'Güncellemeler | Ultimate Pack' }
+        };
+
+        function navigate(hash) {
+            playAudio();
+            window.location.hash = hash;
+        }
+
+        function handleRoute() {
+            const hash = window.location.hash || '#/';
+            const route = routes[hash] || routes['#/'];
+            
+            // Tüm routeleri gizle
+            document.querySelectorAll('main > section').forEach(sec => sec.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            // Seçili route'u göster
+            document.getElementById(route.id).classList.remove('hidden');
+            document.getElementById(route.id).classList.add('flex'); // Home için flex lazım
+            document.title = route.title;
+
+            // Header tab aktifliği
+            const tabMap = { '#/ozellikler': 'nav-features', '#/galeri': 'nav-gallery', '#/guncellemeler': 'nav-updates' };
+            if(tabMap[hash]) document.getElementById(tabMap[hash]).classList.add('active');
+            
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+        window.addEventListener('hashchange', handleRoute);
 
-        // 3. CANLI DISCORD APISİ (CORS PROXY İLE TÜRKİYE ENGELİ AŞIMI)
-        const DISCORD_CODE = "7KNwXBBb6xy";
-        const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(`https://discord.com/api/v10/invites/${DISCORD_CODE}?with_counts=true`)}`;
 
-        fetch(proxyUrl)
-            .then(res => res.json())
-            .then(data => {
-                if (data.approximate_presence_count) {
-                    document.getElementById('discordLiveStatus').innerText = `CANLI — ${data.approximate_presence_count} Çevrim içi | ${data.approximate_member_count || 0} Üye`;
-                } else {
-                    document.getElementById('discordLiveStatus').innerText = `CANLI — Sunucuya Katıl`;
-                }
-            })
-            .catch(() => {
-                document.getElementById('discordLiveStatus').innerText = `CANLI — Discord Aktif`;
-            });
+        // --- 3. VERİ YÖNETİMİ (LocalStorage & Admin) ---
+        // Varsayılan Veriler
+        let db = {
+            downloads: parseInt(localStorage.getItem('celhrox_dl')) || 0,
+            gallery: JSON.parse(localStorage.getItem('celhrox_gal')) || ['https://files.catbox.moe/kq195p.png'],
+            updates: localStorage.getItem('celhrox_upd') || "v3.2.0 — Bald Bird kılıç dokuları yenilendi, PvP animasyonları hızlandırıldı.\nv3.1.5 — FPS Boost modu: gereksiz partikül dokuları %40 küçültüldü.\nv3.1.0 — Özelleştirilmiş Unicode font eklendi, tam Türkçe karakter desteği.\nv3.0.0 — Bare Bones blok mimarisi tamamen elden geçirildi.",
+            discord: localStorage.getItem('celhrox_dc') || "https://discord.gg/7KNwXBBb6xy",
+            version: localStorage.getItem('celhrox_ver') || "v3.2.0"
+        };
 
-        // 4. YAMALAR / GÜNCELLEME NOTLARI
-        const patchNotes = [
-            { version: "v3.2.0", note: "Bald Bird kılıç dokuları yenilendi, PvP animasyonları hızlandırıldı." },
-            { version: "v3.1.5", note: "FPS Boost modu: gereksiz partikül dokuları %40 küçültüldü." },
-            { version: "v3.1.0", note: "Özelleştirilmiş Unicode font eklendi, tam Türkçe karakter desteği." },
-            { version: "v3.0.0", note: "Bare Bones blok mimarisi tamamen elden geçirildi." }
-        ];
+        function renderData() {
+            // Sürüm & Link
+            document.getElementById('displayVersion').innerText = `Sürüm ${db.version}`;
+            document.getElementById('displayDiscord').href = db.discord;
 
-        function renderPatchNotes() {
-            const container = document.getElementById('patchNotesContainer');
-            container.innerHTML = patchNotes.map(p => `
-                <div class="bg-brand-card p-4 rounded-xl border border-gray-800/80 flex items-start gap-3">
-                    <span class="text-brand-400 text-sm mt-0.5"><i class="fa-solid fa-diamond"></i></span>
-                    <p class="text-xs md:text-sm text-gray-300 font-medium">${p.version} — ${p.note}</p>
+            // Galeri
+            const galCont = document.getElementById('galleryContainer');
+            galCont.innerHTML = db.gallery.map(url => `
+                <div class="bg-brand-card p-3 rounded-[2rem] border border-gray-800 shadow-2xl hover:border-brand-500/50 transition duration-300">
+                    <img src="${url}" class="w-[300px] h-[300px] object-cover rounded-3xl">
                 </div>
             `).join('');
-        }
-        renderPatchNotes();
 
-        // 5. TELİF HAKKI YAZISINA 3 TIKLAMA İLE ADMİN PANELİ GİZLİ TETİKLENMESİ
+            // Güncellemeler
+            const updCont = document.getElementById('updatesContainer');
+            updCont.innerHTML = db.updates.split('\n').filter(line => line.trim() !== '').map(line => {
+                const parts = line.split('—');
+                const ver = parts[0] ? parts[0].trim() : '';
+                const text = parts[1] ? parts[1].trim() : line;
+                return `
+                <div class="bg-brand-card p-4 rounded-xl border border-gray-800/80 flex items-start gap-3">
+                    <span class="text-brand-400 text-sm mt-0.5"><i class="fa-solid fa-diamond"></i></span>
+                    <p class="text-sm text-gray-300 font-medium"><strong class="text-white">${ver}</strong> ${ver && text ? '—' : ''} ${text}</p>
+                </div>`;
+            }).join('');
+        }
+
+        // --- 4. GİZLİ ADMİN TETİKLEYİCİSİ (3 Tık + Shift+Q) ---
         let copyrightClicks = 0;
-        let copyrightTimer;
+        let adminTimer = null;
+        let adminArmed = false;
+
         document.getElementById('copyrightText').addEventListener('click', () => {
             copyrightClicks++;
-            clearTimeout(copyrightTimer);
             if (copyrightClicks === 3) {
-                openAdminModal();
+                adminArmed = true;
                 copyrightClicks = 0;
-            } else {
-                copyrightTimer = setTimeout(() => { copyrightClicks = 0; }, 1000);
+                clearTimeout(adminTimer);
+                // 10 Saniye boyunca tuş kombinasyonunu bekler
+                adminTimer = setTimeout(() => { adminArmed = false; }, 10000); 
             }
         });
 
-        // 6. ADMİN MODAL İŞLEMLERİ
+        document.addEventListener('keydown', (e) => {
+            if (adminArmed && e.shiftKey && (e.key === 'q' || e.key === 'Q')) {
+                // Sol üstte butonu göster
+                document.getElementById('secretAdminBtn').classList.remove('hidden');
+                document.getElementById('secretAdminBtn').classList.add('inline-flex');
+                adminArmed = false; // Tetikleyiciyi sıfırla
+            }
+        });
+
+
+        // --- 5. ADMİN MODAL İŞLEMLERİ ---
         const adminModal = document.getElementById('adminModal');
         let currentAdminPass = localStorage.getItem('celhrox_pass') || 'admin123';
 
         function openAdminModal() {
             adminModal.classList.remove('hidden');
+            adminModal.classList.add('flex');
             document.getElementById('adminAuthView').classList.remove('hidden');
             document.getElementById('adminPanelView').classList.add('hidden');
         }
 
         function closeAdminModal() {
             adminModal.classList.add('hidden');
+            adminModal.classList.remove('flex');
         }
 
         function verifyAdminPassword() {
-            const passInput = document.getElementById('adminPasswordInput').value;
-            if (passInput === currentAdminPass) {
+            if (document.getElementById('adminPasswordInput').value === currentAdminPass) {
                 document.getElementById('adminAuthView').classList.add('hidden');
                 document.getElementById('adminPanelView').classList.remove('hidden');
-                document.getElementById('adminVersionInput').value = document.getElementById('versionTag').innerText;
-                document.getElementById('adminDescInput').value = document.getElementById('heroDesc').innerText;
+                document.getElementById('adminPanelView').classList.add('flex');
+                loadAdminData();
             } else {
                 alert('Hatalı Şifre!');
             }
         }
 
-        function saveAdminChanges() {
-            const newVersion = document.getElementById('adminVersionInput').value;
-            const newDesc = document.getElementById('adminDescInput').value;
-            const newPass = document.getElementById('adminNewPassInput').value;
-
-            if (newVersion) document.getElementById('versionTag').innerText = newVersion;
-            if (newDesc) document.getElementById('heroDesc').innerText = newDesc;
-            if (newPass) {
-                currentAdminPass = newPass;
-                localStorage.setItem('celhrox_pass', newPass);
-            }
-
-            alert('Ayarlar kaydedildi!');
-            closeAdminModal();
+        function loadAdminData() {
+            document.getElementById('adminDownloadCount').innerText = db.downloads;
+            document.getElementById('adminUpdatesInput').value = db.updates;
+            document.getElementById('adminDiscordInput').value = db.discord;
+            document.getElementById('adminVersionInput').value = db.version;
+            renderAdminGallery();
         }
+
+        // İndirme İşlemi
+        function handleDownload() {
+            playAudio();
+            db.downloads++;
+            localStorage.setItem('celhrox_dl', db.downloads);
+            alert('Paket indirmesi başlatılıyor!');
+        }
+        function resetDownloads() {
+            db.downloads = 0;
+            localStorage.setItem('celhrox_dl', 0);
+            document.getElementById('adminDownloadCount').innerText = 0;
+        }
+
+        // Admin Galeri
+        function renderAdminGallery() {
+            const list = document.getElementById('adminGalleryList');
+            list.innerHTML = db.gallery.map((url, i) => `
+                <div class="flex items-center justify-between bg-[#090D14] p-3 rounded-lg border border-gray-800">
+                    <div class="flex items-center gap-3 overflow-hidden">
+                        <img src="${url}" class="w-10 h-10 rounded object-cover">
+                        <span class="text-xs text-gray-400 truncate w-48">${url}</span>
+                    </div>
+                    <button onclick="removeGalleryImg(${i})" class="text-xs text-red-400 hover:text-red-300 px-3 py-1 border border-red-900/50 rounded transition">Çıkar</button>
+                </div>
+            `).join('');
+        }
+        function addGalleryImage() {
+            const val = document.getElementById('newImgUrl').value;
+            if(val) {
+                db.gallery.push(val);
+                localStorage.setItem('celhrox_gal', JSON.stringify(db.gallery));
+                document.getElementById('newImgUrl').value = '';
+                renderAdminGallery();
+                renderData();
+            }
+        }
+        function removeGalleryImg(index) {
+            db.gallery.splice(index, 1);
+            localStorage.setItem('celhrox_gal', JSON.stringify(db.gallery));
+            renderAdminGallery();
+            renderData();
+        }
+
+        // Kaydetme İşlevleri
+        function saveUpdates() {
+            db.updates = document.getElementById('adminUpdatesInput').value;
+            localStorage.setItem('celhrox_upd', db.updates);
+            renderData();
+            // Butonu yeşil yapıp geri döndür
+            const btn = event.target;
+            const originalText = btn.innerText;
+            btn.innerText = "Kaydedildi!";
+            btn.classList.add("bg-emerald-500");
+            setTimeout(() => { btn.innerText = originalText; btn.classList.remove("bg-emerald-500"); }, 1500);
+        }
+        function saveLinks() {
+            db.discord = document.getElementById('adminDiscordInput').value;
+            db.version = document.getElementById('adminVersionInput').value;
+            localStorage.setItem('celhrox_dc', db.discord);
+            localStorage.setItem('celhrox_ver', db.version);
+            renderData();
+            const btn = event.target;
+            const originalText = btn.innerText;
+            btn.innerText = "Güncellendi!";
+            btn.classList.add("bg-emerald-500");
+            setTimeout(() => { btn.innerText = originalText; btn.classList.remove("bg-emerald-500"); }, 1500);
+        }
+
+        // --- 6. DISCORD API (PROXY) ---
+        function loadDiscordAPI() {
+            // Linkin sonundaki davet kodunu ayıkla
+            const code = db.discord.split('/').pop(); 
+            const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(`https://discord.com/api/v10/invites/${code}?with_counts=true`)}`;
+            fetch(proxyUrl)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.approximate_presence_count) {
+                        document.getElementById('discordLiveStatus').innerText = `CANLI — ${data.approximate_presence_count} Çevrim içi`;
+                    }
+                })
+                .catch(() => {
+                    document.getElementById('discordLiveStatus').innerText = `CANLI — Discord Aktif`;
+                });
+        }
+
+        // --- BAŞLANGIÇ ÇALIŞTIRICILARI ---
+        handleRoute();
+        renderData();
+        loadDiscordAPI();
+
     </script>
 </body>
 </html>
